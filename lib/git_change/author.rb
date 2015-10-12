@@ -8,8 +8,7 @@ module GitChange
 
     argument :name
     argument :email
-    argument :old_name, optional: true, default: GitChange::Util.user_name
-    argument :old_email, optional: true, default: GitChange::Util.user_email
+    class_option :old_email, default: GitChange::Util.user_email
 
     def self.source_root
       File.dirname(__FILE__)
@@ -41,12 +40,22 @@ module GitChange
     end
 
     def set_local_config
-      # `git config user.name #{name}`
-      # `git config user.email #{email}`
+      old_name = GitChange::Util.user_name
+      old_email = options[:old_email]
       puts "change local config user.name from #{old_name} to #{name}".
         colorize(:green)
       puts "change local config user.email from #{old_email} to #{email}".
         colorize(:green)
+      `git config user.name #{name}`
+      `git config user.email #{email}`
+    end
+
+    def puts_command_to_finish
+      puts "After you review the change, you can run the command below"
+      puts "inside temp_repo, after that remove the temp_repo"
+      puts "============================================================" 
+      puts "git push --force --tags origin 'refs/head/*'"
+      puts "============================================================" 
     end
   end
 end
