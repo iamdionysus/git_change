@@ -10,7 +10,6 @@ module GitChange
     method_option :old_email, aliases: "-e", type: :string,
       desc: "old email address to change"
     def author(name, email)
-      puts options
       invoke GitChange::Author, [name, email], options
     end
   end
