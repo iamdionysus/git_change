@@ -54,7 +54,7 @@ module GitChange
       puts "After you review the change, you can run the command below"
       puts "inside temp_repo, after that remove the temp_repo"
       puts "============================================================" 
-      puts "git push --force --tags origin 'refs/head/*'"
+      puts "git push --force --tags origin 'refs/heads/*'"
       puts "============================================================" 
     end
   end
